@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Card</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: linear-gradient(135deg, #f8e1f4, #fff6fa);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+    .card-wrapper {
+      perspective: 1000px;
+      position: relative;
+    }
+    .card {
+      width: 600px;
+      height: 400px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 1s ease-in-out;
+    }
+    .panel {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      background-color: #fff;
+      border: 2px solid #e91e63;
+      padding: 20px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 1s ease-in-out;
+      backface-visibility: hidden;
+      z-index: 2;
+    }
+    .left-panel {
+      left: 0;
+      border-radius: 20px 0 0 20px;
+      transform-origin: left;
+    }
+    .right-panel {
+      right: 0;
+      border-radius: 0 20px 20px 0;
+      transform-origin: right;
+    }
+    .card.open .left-panel {
+      transform: rotateY(-150deg);
+      z-index: 1;
+    }
+    .card.open .right-panel {
+      transform: rotateY(150deg);
+      z-index: 1;
+    }
+    .inner {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: radial-gradient(circle, #fff8f9 0%, #ffe6f0 100%);
+      border: 2px dashed #e91e63;
+      border-radius: 20px;
+      z-index: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      transform: rotateY(0deg);
+      backface-visibility: hidden;
+      position: relative;
+    }
+    .inner h1 {
+      color: #e91e63;
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px #fff;
+    }
+    .inner p {
+      font-size: 1.3rem;
+      color: #444;
+      text-align: center;
+    }
+    .streamers {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 80px;
+      background: url('https://i.imgur.com/3DZ1tcS.png') repeat-x;
+      background-size: contain;
+    }
+    .confetti {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .confetti span {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #e91e63;
+      opacity: 0.8;
+      border-radius: 50%;
+      animation: fall 4s infinite ease-in-out;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(500px) rotate(720deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card-wrapper">
+    <div class="streamers"></div>
+    <div class="card" id="card">
+      <div class="panel left-panel">🎁</div>
+      <div class="panel right-panel">🎉</div>
+      <div class="inner">
+        <h1>Happy Birthday</h1>
+        <p>Chúc mừng sinh nhật em bé của anh.Chúc em có một ngày sinh nhật thật nhiều niềm vui, tiếng cười và những điều ngọt ngào nhất!</p>
+      </div>
+    </div>
+    <div class="confetti" id="confetti"></div>
+  </div>
+  <script>
+    // Tự động mở thiệp sau 2 giây
+    setTimeout(() => {
+      document.getElementById('card').classList.add('open');
+    }, 2000);
+
+    // Thêm confetti động
+    const confetti = document.getElementById('confetti');
+    for (let i = 0; i < 100; i++) {
+      const dot = document.createElement('span');
+      dot.style.left = Math.random() * 100 + '%';
+      dot.style.top = '-' + Math.random() * 200 + 'px';
+      dot.style.backgroundColor = ['#e91e63', '#ffc107', '#4caf50', '#2196f3'][Math.floor(Math.random() * 4)];
+      dot.style.animationDelay = (Math.random() * 4) + 's';
+      confetti.appendChild(dot);
+    }
+  </script>
+</body>
+</html>
